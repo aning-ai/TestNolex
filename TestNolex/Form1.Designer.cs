@@ -61,6 +61,7 @@ namespace TestNolex
             this.lstAmbul.Name = "lstAmbul";
             this.lstAmbul.Size = new System.Drawing.Size(189, 173);
             this.lstAmbul.TabIndex = 0;
+            this.lstAmbul.SelectedIndexChanged += new System.EventHandler(this.lstAmbul_SelectedIndexChanged);
             // 
             // lstPartiCorpo
             // 
@@ -69,6 +70,7 @@ namespace TestNolex
             this.lstPartiCorpo.Name = "lstPartiCorpo";
             this.lstPartiCorpo.Size = new System.Drawing.Size(189, 173);
             this.lstPartiCorpo.TabIndex = 1;
+            this.lstPartiCorpo.SelectedIndexChanged += new System.EventHandler(this.lstPartiCorpo_SelectedIndexChanged);
             // 
             // lstEsami
             // 
@@ -136,6 +138,7 @@ namespace TestNolex
             this.btnSelEsame.TabIndex = 10;
             this.btnSelEsame.Text = "Seleziona esame";
             this.btnSelEsame.UseVisualStyleBackColor = true;
+            this.btnSelEsame.Click += new System.EventHandler(this.btnSelEsame_Click);
             // 
             // label2
             // 
@@ -187,6 +190,7 @@ namespace TestNolex
             this.button1.TabIndex = 15;
             this.button1.Text = "Tutto";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textCerca
             // 
@@ -203,6 +207,7 @@ namespace TestNolex
             this.btnCerca.TabIndex = 13;
             this.btnCerca.Text = "Cerca";
             this.btnCerca.UseVisualStyleBackColor = true;
+            this.btnCerca.Click += new System.EventHandler(this.btnCerca_Click);
             // 
             // radioButton3
             // 

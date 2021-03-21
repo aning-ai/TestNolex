@@ -85,5 +85,30 @@ namespace TestNolex
                 MessageBox.Show("Error:" + l);
             }
         }
+
+        private void lstAmbul_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //todo: selezionare esami offerti dall'ambulatorio e relative parti del corpo
+        }
+
+        private void lstPartiCorpo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //todo: selezionare esami eseguiti per la parte del corpo e relativi ambulatori
+        }
+
+        private void btnSelEsame_Click(object sender, EventArgs e)
+        {
+            //todo: aggiungere riga alla griglia
+        }
+
+        private void btnCerca_Click(object sender, EventArgs e)
+        {
+            //todo: riesegui la query col filtro selezionato (valore e tipo)
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //todo: svuota filtro e riesegui la query 
+        }
     }
 }
