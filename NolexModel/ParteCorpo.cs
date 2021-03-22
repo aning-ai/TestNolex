@@ -6,5 +6,9 @@ namespace NolexModel
     {
         public int Id {get; set;}
         public string Descrizione { get; set; }
+        public override string ToString()
+        {
+            return Descrizione;
+        }
     }
 }

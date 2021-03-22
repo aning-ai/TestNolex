@@ -79,6 +79,7 @@ namespace TestNolex
             this.lstEsami.Name = "lstEsami";
             this.lstEsami.Size = new System.Drawing.Size(189, 173);
             this.lstEsami.TabIndex = 2;
+            this.lstEsami.SelectedIndexChanged += new System.EventHandler(this.lstEsami_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
@@ -96,6 +97,7 @@ namespace TestNolex
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(643, 132);
             this.dataGridView1.TabIndex = 9;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // CodMin
             // 
@@ -243,6 +245,7 @@ namespace TestNolex
             // 
             // Form1
             // 
+            this.AcceptButton = this.btnCerca;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);

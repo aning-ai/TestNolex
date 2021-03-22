@@ -1,5 +1,8 @@
-﻿using System;
+﻿using NolexIniSetting;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,26 +19,23 @@ namespace TestNolex
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+#if DEBUG
+            string file_ini = "..\\..\\..\\TestNolex.ini";
+#else
+            string file_ini = Application.ExecutablePath +  "\\" + "TestNolex.ini";
+#endif            
+            if (File.Exists(file_ini))
+                IniSetting.Load(file_ini);
 
-            //todo: caricamento file .ini con valorizzazione valori classi statiche)
-            //[StampaServer]
-            //StampaServerEnabled = 1
-            //UpdateInterval = 3
+            SqlConnection myConnection = new SqlConnection(
+                                            "user id=" + Predefiniti_Archivio.UserId + ";" +
+                                            "password=" + Predefiniti_Archivio.Pwd + ";" +
+                                            "server=" + Predefiniti_Archivio.ArchivioPath + ";" +
+                                            "Trusted_Connection=yes;" +
+                                            "database=" + Predefiniti_Archivio.CatalogName + ";" +
+                                            "connection timeout=30");
 
-            //[Archivio]
-            //#Percorso SQL
-            //ArchivioPath = "CLEARCANVAS64PC\IMAGESERVER2"
-            //CatalogName = "FastprintProDoca"
-            //#MaxStorageDays = 1000
-            //MaxStorageDaysCheckInterval = 10
-
-            //[Dicom]
-            //#DCMColPrintProcessServerAdditionalOptions = "-v -d +d"
-            //DCMColPrintProcessServerAdditionalOptions = ""
-            //#DCMBNPrintProcessServerAdditionalOptions = "-v -d"
-            //DCMBNPrintProcessServerAdditionalOptions = ""
-
-            Application.Run(new Form1());
+            Application.Run(new Form1(myConnection));
         }
     }
 }

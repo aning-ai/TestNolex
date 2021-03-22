@@ -9,7 +9,7 @@ namespace NolexController
     public class AmbulatorioCtrl
     {
         IList<Ambulatorio> _ambulatori;
-        Ambulatorio _selectedAmb;
+        //Ambulatorio _selectedAmb;
         SqlConnection myConnection;
 
         public AmbulatorioCtrl(SqlConnection connection)

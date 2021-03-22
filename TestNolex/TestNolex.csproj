@@ -78,6 +78,10 @@
       <Project>{e8e88c0f-3d98-459c-ab45-fcddb7b6de6b}</Project>
       <Name>NolexController</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NolexIniSetting\NolexIniSetting.csproj">
+      <Project>{35811ed0-04b4-4735-8018-768759a096ca}</Project>
+      <Name>NolexIniSetting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NolexModel\NolexModel.csproj">
       <Project>{17418d65-0f66-4dcf-aabb-d0fb7ddaa98e}</Project>
       <Name>NolexModel</Name>

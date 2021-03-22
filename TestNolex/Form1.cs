@@ -8,47 +8,71 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using NolexController;
+using NolexModel;
+using NolexIniSetting;
 
 namespace TestNolex
 {
     public partial class Form1 : Form
     {
-        SqlConnection myConnection;
         AmbulatorioCtrl ambulatorioCtrl;
         ParteCorpoCtrl particorpoCtrl;
         EsameCtrl esamiCtrl;
-        public Form1()
+
+        public SqlConnection DbConnection { get; }
+
+        public Form1(SqlConnection myConnection)
+        {
+            DbConnection = myConnection;
+            Inizializza();
+        }
+
+        public void Inizializza()
         {
             InitializeComponent();
 
-            myConnection = new SqlConnection("user id=sa;" +
-                                                   "password=;server=DESKTOP-1E566DR;" +
-                                                   "Trusted_Connection=yes;" +
-                                                   "database=TestNolex; " +
-                                                   "connection timeout=30");
+            selectDefaultRicerca();
 
-            ambulatorioCtrl = new AmbulatorioCtrl(myConnection);
-            if(ambulatorioCtrl.LoadAmbulatori())
+            esamiCtrl = new EsameCtrl(DbConnection);
+            ambulatorioCtrl = new AmbulatorioCtrl(DbConnection);
+            particorpoCtrl = new ParteCorpoCtrl(DbConnection);
+            
+            if (ambulatorioCtrl.LoadAmbulatori())
+            {
                 loadAmbulatori();
+                lstAmbul.SelectedIndex = 0;
+                ricercaEsame();
+            }
 
-            particorpoCtrl = new ParteCorpoCtrl(myConnection);
-            if (particorpoCtrl.LoadPartiCorpo())
-                loadPartiCorpo();
+        }
 
-            esamiCtrl = new EsameCtrl(myConnection);
-            if (esamiCtrl.LoadEsami())
-                loadEsami();
+        private void selectDefaultRicerca()
+        {
+            switch(Predefiniti_Ricerca.Tipo)
+            {
+                case 1:
+                    radioButton1.Checked = true;
+                    break;
+                case 2:
+                    radioButton2.Checked = true;
+                    break;
+                case 3:
+                    radioButton3.Checked = true;
+                    break;
+            }
+
+            textCerca.Text = Predefiniti_Ricerca.Valore;
         }
 
         private void loadAmbulatori()
         {
             try
             {
+                lstAmbul.Items.Clear();
                 foreach (var amb in ambulatorioCtrl.Ambulatori)
                 {
-                    lstAmbul.Items.Add(amb.Descrizione);
+                    lstAmbul.Items.Add(amb);
                 }
-                lstAmbul.SelectedIndex = 0;
             }
             catch (Exception l)
             {
@@ -60,9 +84,10 @@ namespace TestNolex
         {
             try
             {
-                foreach (var amb in particorpoCtrl.PartiCorpo)
+                lstPartiCorpo.Items.Clear();
+                foreach (var par in particorpoCtrl.PartiCorpo)
                 {
-                    lstPartiCorpo.Items.Add(amb.Descrizione);
+                    lstPartiCorpo.Items.Add(par);
                 }
             }
             catch (Exception l)
@@ -75,9 +100,10 @@ namespace TestNolex
         {
             try
             {
+                lstEsami.Items.Clear();
                 foreach (var esa in esamiCtrl.Esami)
                 {
-                    lstEsami.Items.Add(esa.Descrizione);
+                    lstEsami.Items.Add(esa);
                 }
             }
             catch (Exception l)
@@ -86,29 +112,105 @@ namespace TestNolex
             }
         }
 
+        private void caricaPartiCorpo()
+        {
+            Ambulatorio amb = (Ambulatorio)lstAmbul.SelectedItem;
+            if (particorpoCtrl.LoadPartiCorpo(amb.Id))
+                loadPartiCorpo();
+        }
+        private void caricaEsami()
+        {
+            Ambulatorio amb = (Ambulatorio)lstAmbul.SelectedItem;
+            ParteCorpo par = (ParteCorpo)lstPartiCorpo.SelectedItem;
+            if (esamiCtrl.LoadEsami(amb.Id, par != null ? par.Id : 0))
+                loadEsami();
+        }
         private void lstAmbul_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //todo: selezionare esami offerti dall'ambulatorio e relative parti del corpo
+            caricaPartiCorpo();
+
+            caricaEsami();
+
+            abilitaDisabilitaSelezioneEsame();
         }
 
         private void lstPartiCorpo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //todo: selezionare esami eseguiti per la parte del corpo e relativi ambulatori
+            Ambulatorio amb = (Ambulatorio)lstAmbul.SelectedItem;
+            ParteCorpo par = (ParteCorpo)lstPartiCorpo.SelectedItem;
+            if (esamiCtrl.LoadEsami(amb.Id, par.Id))
+                loadEsami();
+
+            abilitaDisabilitaSelezioneEsame();
+        }
+
+        private void abilitaDisabilitaSelezioneEsame()
+        {
+            //btnSelEsame.Enabled = lstAmbul.SelectedItem != null && lstPartiCorpo.SelectedItem != null && lstEsami.SelectedItem != null;
+            btnSelEsame.Enabled = lstAmbul.SelectedItem != null && lstEsami.SelectedItem != null;
         }
 
         private void btnSelEsame_Click(object sender, EventArgs e)
         {
-            //todo: aggiungere riga alla griglia
+            Ambulatorio amb = (Ambulatorio)lstAmbul.SelectedItem;
+            //ParteCorpo par = (ParteCorpo)lstPartiCorpo.SelectedItem;
+            Esame esa = (Esame)lstEsami.SelectedItem;
+
+            dataGridView1.Rows.Add(esa.CodiceMinisteriale,
+                                   esa.CodiceInterno,
+                                   esa.Descrizione,
+                                   amb.Descrizione,
+                                   //par.Descrizione);
+                                   esa.DescrizioneParteCorpo);
+        }
+        
+        private void ricercaEsame()
+        {
+            if (radioButton1.Checked)
+            {
+                esamiCtrl.CampoRicerca = "codiceministeriale";
+            }
+            else if (radioButton2.Checked)
+            {
+                esamiCtrl.CampoRicerca = "codiceitnerno";
+            }
+            else if (radioButton3.Checked)
+            {
+                esamiCtrl.CampoRicerca = "descrizione";
+            }
+            esamiCtrl.ValoreRicerca = textCerca.Text;
+
+            caricaEsami();
+            abilitaDisabilitaSelezioneEsame();
         }
 
         private void btnCerca_Click(object sender, EventArgs e)
         {
-            //todo: riesegui la query col filtro selezionato (valore e tipo)
+            ricercaEsame();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //todo: svuota filtro e riesegui la query 
+            textCerca.Text = "";
+            esamiCtrl.CampoRicerca = "";
+            esamiCtrl.ValoreRicerca = "";
+            ricercaEsame();
+        }
+
+        private void lstEsami_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            abilitaDisabilitaSelezioneEsame();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                dataGridView1.Rows.RemoveAt(e.RowIndex);
+            }
         }
     }
 }

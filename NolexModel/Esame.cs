@@ -9,5 +9,13 @@ namespace NolexModel
         public string CodiceMinisteriale { get; set; }
         public string CodiceInterno { get; set; }
         public int IdParteCorpo { get; set; }
+        
+        //solo per comodità...
+        public string DescrizioneParteCorpo { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Descrizione} ({CodiceMinisteriale}, {CodiceInterno})";
+        }
     }
 }

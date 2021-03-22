@@ -9,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NolexController", "NolexCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NolexModel", "NolexModel\NolexModel.csproj", "{17418D65-0F66-4DCF-AABB-D0FB7DDAA98E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NolexIniSetting", "NolexIniSetting\NolexIniSetting.csproj", "{17095D81-8212-470C-9AD6-1C708FED07CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NolexIniSetting", "NolexIniSetting\NolexIniSetting.csproj", "{35811ED0-04B4-4735-8018-768759A096CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67494EAC-D94D-43C5-A82F-23605A94EB9E}"
+	ProjectSection(SolutionItems) = preProject
+		TestNolex.bak = TestNolex.bak
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +34,10 @@ Global
 		{17418D65-0F66-4DCF-AABB-D0FB7DDAA98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17418D65-0F66-4DCF-AABB-D0FB7DDAA98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17418D65-0F66-4DCF-AABB-D0FB7DDAA98E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17095D81-8212-470C-9AD6-1C708FED07CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17095D81-8212-470C-9AD6-1C708FED07CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17095D81-8212-470C-9AD6-1C708FED07CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17095D81-8212-470C-9AD6-1C708FED07CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35811ED0-04B4-4735-8018-768759A096CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35811ED0-04B4-4735-8018-768759A096CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35811ED0-04B4-4735-8018-768759A096CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35811ED0-04B4-4735-8018-768759A096CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
